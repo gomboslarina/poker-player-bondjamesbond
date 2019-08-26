@@ -34,7 +34,9 @@ public class Player {
 
         if (bothCardsHigh) {
              return jsonObject.get("current_buy_in").getAsInt();
-        } else {
+        } else if (jsonObject.get("current_buy_in").getAsInt() == jsonObject.get("small_blind").getAsInt() * 2){
+            return jsonObject.get("current_buy_in").getAsInt();
+        }else {
             return 0;
         }
 
