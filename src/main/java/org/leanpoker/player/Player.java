@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class Player {
 
-    static final String VERSION = "1.0.4";
+    static final String VERSION = "1.0.5";
 
     public static int betRequest(JsonElement request) {
 
@@ -46,8 +46,10 @@ public class Player {
             }
         }
 
-        if ( bothCardsHigh || bothCardsSuit || bothCardsEqual) {
-             return jsonObject.get("current_buy_in").getAsInt();
+        if ( bothCardsHigh || bothCardsEqual) {
+            return jsonObject.get("current_buy_in").getAsInt();
+        } else if (bothCardsSuit && jsonObject.get("current_buy_in").getAsInt() < 500) {
+            return jsonObject.get("current_buy_in").getAsInt();
         } else if (jsonObject.get("current_buy_in").getAsInt() == jsonObject.get("small_blind").getAsInt() * 2){
             return jsonObject.get("current_buy_in").getAsInt();
         }else {
