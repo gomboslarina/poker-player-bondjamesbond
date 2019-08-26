@@ -68,6 +68,7 @@ public class Player {
 
         int playerId = request.getAsJsonObject().get("in_action").getAsInt();
         JsonArray jsonArray = request.getAsJsonObject().get("players").getAsJsonArray();
+        int placedInBet = 0;
 
         for (JsonElement obj : jsonArray) {
             if (obj.getAsJsonObject().get("id").getAsInt() == playerId) {
@@ -79,9 +80,11 @@ public class Player {
                 suit1 = myCards.get(0).getAsJsonObject().get("suit").getAsString();
                 suit2 = myCards.get(1).getAsJsonObject().get("suit").getAsString();
 
-                return obj.getAsJsonObject().get("bet").getAsInt();
+                placedInBet = obj.getAsJsonObject().get("bet").getAsInt();
             }
         }
+
+        return placedInBet;
     }
 
     public static void showdown(JsonElement game) {
