@@ -7,12 +7,16 @@ import java.util.Map;
 
 public class Player {
 
-    static final String VERSION = "1.0.3";
+    static final String VERSION = "1.0.4";
 
     public static int betRequest(JsonElement request) {
 
         JsonObject jsonObject = request.getAsJsonObject();
-        return jsonObject.get("current_buy_in").getAsInt();
+
+        if (jsonObject.get("round").getAsInt() < 50)
+            {return 0;}
+        else
+            {return jsonObject.get("current_buy_in").getAsInt();}
 
     }
 
