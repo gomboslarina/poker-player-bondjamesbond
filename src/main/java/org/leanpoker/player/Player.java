@@ -46,7 +46,7 @@ public class Player {
             }
         }
 
-        if (bothCardsHigh || bothCardsEqual || bothCardsSuit) {
+        if ( (bothCardsHigh && bothCardsSuit) || bothCardsEqual) {
              return jsonObject.get("current_buy_in").getAsInt();
         } else if (jsonObject.get("current_buy_in").getAsInt() == jsonObject.get("small_blind").getAsInt() * 2){
             return jsonObject.get("current_buy_in").getAsInt();
