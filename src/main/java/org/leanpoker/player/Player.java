@@ -60,7 +60,7 @@ public class Player {
 
         if (bothCardsEqual || bothCardsHigh || checkPairs) {
             return jsonObject.get("current_buy_in").getAsInt();
-        } else if (bothCardsSuit && jsonObject.get("current_buy_in").getAsInt() < 200) {
+        } else if (bothCardsSuit && (jsonObject.get("current_buy_in").getAsInt() < 200)) {
             return jsonObject.get("current_buy_in").getAsInt();
         } else if (jsonObject.get("current_buy_in").getAsInt() == jsonObject.get("small_blind").getAsInt() * 2){
             return jsonObject.get("current_buy_in").getAsInt();
