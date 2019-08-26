@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.Arrays;
-import java.util.Map;
 
 public class Player {
 
@@ -17,6 +16,7 @@ public class Player {
 
         boolean bothCardsHigh = false;
         boolean bothCardsEqual = false;
+        boolean bothCardsSuit = false;
 
         int playerId = jsonObject.get("in_action").getAsInt();
         JsonArray jsonArray = jsonObject.get("players").getAsJsonArray();
@@ -26,10 +26,18 @@ public class Player {
 
                 String rank1 = myCards.get(0).getAsJsonObject().get("rank").getAsString();
                 String rank2 = myCards.get(1).getAsJsonObject().get("rank").getAsString();
+
+                String suit1 = myCards.get(0).getAsJsonObject().get("suit").getAsString();
+                String suit2 = myCards.get(1).getAsJsonObject().get("suit").getAsString();
+
                 String[] winner = {"10", "J", "Q", "K", "A"};
 
                 if (rank1.equals(rank2)) {
                     bothCardsEqual = true;
+                }
+
+                if (suit1.equals(suit2)) {
+                    bothCardsSuit = true;
                 }
 
                 if (Arrays.asList(winner).contains(rank1) && Arrays.asList(winner).contains(rank2) ) {
@@ -38,7 +46,7 @@ public class Player {
             }
         }
 
-        if (bothCardsHigh || bothCardsEqual) {
+        if (bothCardsHigh || bothCardsEqual || bothCardsSuit) {
              return jsonObject.get("current_buy_in").getAsInt();
         } else if (jsonObject.get("current_buy_in").getAsInt() == jsonObject.get("small_blind").getAsInt() * 2){
             return jsonObject.get("current_buy_in").getAsInt();
