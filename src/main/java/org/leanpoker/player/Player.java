@@ -36,8 +36,8 @@ public class Player {
                 JsonArray communityCards = jsonObject.get("community_cards").getAsJsonArray();
                 for (JsonElement communityCard : communityCards) {
                     System.out.println(communityCard);
-                    if (communityCard.getAsJsonObject().get("rank").getAsString().equals(rank1) ||
-                            communityCard.getAsJsonObject().get("rank").getAsString().equals(rank2)) {
+                    if ((communityCard.getAsJsonObject().get("rank").getAsString().equals(rank1) && Arrays.asList(winner).contains(rank1))
+                            || (Arrays.asList(winner).contains(rank2) && communityCard.getAsJsonObject().get("rank").getAsString().equals(rank2))) {
                         checkPairs = true;
                     }
                 }
@@ -50,19 +50,18 @@ public class Player {
                     bothCardsSuit = true;
                 }
 
-                if (Arrays.asList(winner).contains(rank1) && Arrays.asList(winner).contains(rank2) ) {
+                if (Arrays.asList(winner).contains(rank1) && Arrays.asList(winner).contains(rank2)) {
                     bothCardsHigh = true;
                 }
             }
         }
 
 
-
         if (bothCardsEqual || bothCardsHigh || checkPairs) {
             return jsonObject.get("current_buy_in").getAsInt();
-        } else if (jsonObject.get("current_buy_in").getAsInt() == jsonObject.get("small_blind").getAsInt() * 2){
+        } else if (jsonObject.get("current_buy_in").getAsInt() == jsonObject.get("small_blind").getAsInt() * 2) {
             return jsonObject.get("current_buy_in").getAsInt();
-        }else {
+        } else {
             return 0;
         }
 
