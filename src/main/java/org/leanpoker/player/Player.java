@@ -16,6 +16,7 @@ public class Player {
         JsonObject jsonObject = request.getAsJsonObject();
 
         boolean bothCardsHigh = false;
+        boolean bothCardsEqual = false;
 
         int playerId = jsonObject.get("in_action").getAsInt();
         JsonArray jsonArray = jsonObject.get("players").getAsJsonArray();
@@ -26,13 +27,18 @@ public class Player {
                 String rank1 = myCards.get(0).getAsJsonObject().get("rank").getAsString();
                 String rank2 = myCards.get(1).getAsJsonObject().get("rank").getAsString();
                 String[] winner = {"10", "J", "Q", "K", "A"};
+
+                if (rank1.equals(rank2)) {
+                    bothCardsEqual = true;
+                }
+
                 if (Arrays.asList(winner).contains(rank1) && Arrays.asList(winner).contains(rank2) ) {
                     bothCardsHigh = true;
                 }
             }
         }
 
-        if (bothCardsHigh) {
+        if (bothCardsHigh || bothCardsEqual) {
              return jsonObject.get("current_buy_in").getAsInt();
         } else if (jsonObject.get("current_buy_in").getAsInt() == jsonObject.get("small_blind").getAsInt() * 2){
             return jsonObject.get("current_buy_in").getAsInt();
