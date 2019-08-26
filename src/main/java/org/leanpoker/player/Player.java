@@ -10,7 +10,7 @@ public class Player {
 
     public static int betRequest(JsonElement request) {
 
-        return current_buy_in - players[in_action][bet];
+        return 1;
     }
 
     public static void showdown(JsonElement game) {
