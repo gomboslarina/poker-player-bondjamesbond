@@ -109,6 +109,8 @@ public class Main {
         JsonObject jsonObj = element.getAsJsonObject();
         System.out.println(jsonObj.get("current_buy_in"));
 
+        boolean checkDouble = false;
+
         int playerId = jsonObj.get("in_action").getAsInt();
         JsonArray jsonArray = jsonObj.get("players").getAsJsonArray();
         for (JsonElement obj : jsonArray) {
@@ -118,14 +120,25 @@ public class Main {
                 String rank1 = myCards.get(0).getAsJsonObject().get("rank").getAsString();
                 String rank2 = myCards.get(1).getAsJsonObject().get("rank").getAsString();
                 String[] winner = {"10", "J", "Q", "K", "A"};
-                if (Arrays.asList(winner).contains(rank1) && Arrays.asList(winner).contains(rank2) ) {
+                if (Arrays.asList(winner).contains(rank1) && Arrays.asList(winner).contains(rank2)) {
                     System.out.println("yeah");
                 }
 
 
+                JsonArray communityCards = jsonObj.get("community_cards").getAsJsonArray();
+                for (JsonElement communityCard : communityCards) {
+                    System.out.println(communityCard);
+                    if (communityCard.getAsJsonObject().get("rank").getAsString().equals(rank1) ||
+                            communityCard.getAsJsonObject().get("rank").getAsString().equals(rank2)) {
+                                checkDouble = true;
+                    }
+                }
             }
 
         }
+        if (checkDouble)
+            System.out.println("YEAh");
+
     }
 
 }
