@@ -23,6 +23,8 @@ public class Player {
 
         String[] winner = {"10", "J", "Q", "K", "A"};
 
+        int bet = 0;
+
         getMyCards(request);
 
         JsonArray communityCards = request.getAsJsonObject().get("community_cards").getAsJsonArray();
@@ -47,14 +49,20 @@ public class Player {
         }
 
 
-        if (bothCardsEqual || bothCardsHigh || checkPairs) {
-            return request.getAsJsonObject().get("current_buy_in").getAsInt();
-        } else if (request.getAsJsonObject().get("current_buy_in").getAsInt() == request.getAsJsonObject().get("small_blind").getAsInt() * 2) {
-            return request.getAsJsonObject().get("current_buy_in").getAsInt();
-        } else {
-            return 0;
+        if (Arrays.asList(communityCards).isEmpty()) {
+
+            if (bothCardsEqual || bothCardsHigh) {
+                bet = request.getAsJsonObject().get("current_buy_in").getAsInt();
+            } else if (request.getAsJsonObject().get("current_buy_in").getAsInt() == request.getAsJsonObject().get("small_blind").getAsInt() * 2) {
+                bet =  request.getAsJsonObject().get("current_buy_in").getAsInt();
+            }
         }
 
+        if (checkPairs) {
+            bet = request.getAsJsonObject().get("current_buy_in").getAsInt();
+        }
+
+        return bet;
     }
 
     public static void getMyCards(JsonElement request) {
